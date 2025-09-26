@@ -24,6 +24,10 @@ router.get("/:pid", async (req,res)=>{
 
 router.post("/", async (req,res)=>{
     try{
+        const{title,description,price,thumbnail,code,stock}= req.body;
+        if(!title||!description||price==null||!thumbnail||!code||stock==null){
+            throw new Error("Todos los campos son obligatorios");
+        }
         const product= await pm.addProduct(req.body);
         res.status(201).json({message:"producto agregado", product});
     } catch(e){
