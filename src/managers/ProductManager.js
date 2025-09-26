@@ -7,6 +7,13 @@ class productManager{
         this.path = path.resolve(filePath);
     }
 
+    async ensureFile(){
+        try {
+            await fs.access(this.path);
+        } catch (error) {
+            await fs.writeFile(this.path, '[]', 'utf-8');
+        }
+    }
     async readAll(){
         const datos= await fs.readFile(this.path,"utf-8");
         return JSON.parse(datos);
