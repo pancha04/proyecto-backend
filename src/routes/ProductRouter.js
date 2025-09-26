@@ -38,6 +38,7 @@ router.post("/", async (req,res)=>{
 router.delete("/:pid", async (req,res)=>{
     try {
         const result= await pm.deleteProduct(Number(req.params.pid));
+        if(!result) return res.status(404).json({error:"producto no encontrado"});
         res.json({message:"producto eliminado", result});
     } catch (e) {
         res.status(500).json({ error: e.message });
