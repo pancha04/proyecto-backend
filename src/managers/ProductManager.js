@@ -34,20 +34,22 @@ class productManager{
         
         const newProduct={
             id:this.nextID(products),
-            title:product.title,
-            description:product.description,
-            price:product.price,
-            thumbnail:product.thumbnail,
-            code:product.code,
-            stock:product.stock
+            name:product.name,
+            price:Number(product.price),
+            oferta:Boolean(product.oferta),
+            stock:Number(product.stock)
         }
         products.push(newProduct);
         await this.writeFile(products);
+        return newProduct;
     }
     async deleteProduct(id){
-        const products= await this.readAll();
-        const newProducts= products.filter(p=>p.id!==id);
-        return await this.writeFile(newProducts);
+        const products = await this.readAll();
+        const before = products.length;
+        const after  = products.filter(p => p.id !== Number(id));
+        if (after.length === before) return false;
+        await this.writeFile(after);
+        return true;
     }
 
     async getProductsById(id){

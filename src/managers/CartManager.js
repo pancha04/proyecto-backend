@@ -59,5 +59,15 @@ class cartManager{
         return carts[cid];
     }
 
+    async deletCart(cartId){
+        const carts= await this.readAll();
+        if(!carts.find(c=>c.id===Number(cartId))) throw new Error("carrito no encontrado");
+        
+        const newCarts= carts.filter(c=>c.id!==Number(cartId));
+
+        await this.writeFile(newCarts);
+        return newCarts;
+    }
+
 }
 module.exports= cartManager;

@@ -1,0 +1,10 @@
+
+    <ul id="productsList">
+        {{#each products}}
+        <li>
+            {{name}} - {{price}}
+        </li>
+        {{/each}}
+    </ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/realTimeProducts.js"></script>

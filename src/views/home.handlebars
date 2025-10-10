@@ -1,0 +1,12 @@
+
+    <ul>
+        {{#each products}}
+        <li>
+            {{name}} - {{price}}
+            {{#if oferta}}
+                <strong>En oferta!</strong>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
+

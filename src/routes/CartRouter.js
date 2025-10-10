@@ -1,6 +1,6 @@
 const {Router}= require('express');
 const CartManager= require('../managers/CartManager');
-const cm= new CartManager('./carts.json');
+const cm= new CartManager('data/carts.json');
 const router= Router();
 
 router.post("/", async(req,res)=>{
@@ -30,4 +30,15 @@ router.post("/:cid/product/:pid", async(req,res)=>{
         res.status(500).json({ error: e.message });
     }
 });
+
+router.delete("/:cid", async (req,res)=>{
+    try {
+        const result=await cm.deleteCart(req.params.cid);
+        if(!result) return res.status(404).json({error:"carrito no encontrado"});
+
+        res.json({message:"carrito eliminado" , carts:result});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
 module.exports = router;
