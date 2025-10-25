@@ -47,19 +47,20 @@ class cartManager{
 
     async addProductToCart(cartId, productId, quantly=1){
         const carts= await this.readAll();
-        const cid= carts.find(c=>c.id===Number(cartId));
+        const cart= carts.find(c=>c.id===Number(cartId));
+        if(!cart) throw new Error("carrito no encontrado");
 
         const pid= Number(productId);
-        const item= carts[cid].products.find(p=>p.product===pid);
+        const item= cart.products.find(p=>p.product===pid);
 
-        if (item) item.quantly+1;
-        else carts[cid].products.push({product: pid, quantly});
+        if (item) item.quantly+=1;
+        else cart.products.push({product: pid, quantly});
 
         await this.writeFile(carts);
-        return carts[cid];
+        return cart;
     }
 
-    async deletCart(cartId){
+    async deleteCart(cartId){
         const carts= await this.readAll();
         if(!carts.find(c=>c.id===Number(cartId))) throw new Error("carrito no encontrado");
         
