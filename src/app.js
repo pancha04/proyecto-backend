@@ -31,12 +31,6 @@ app.use(express.static(path.join(__dirname, '/public'), { index: false }));
 
 app.set('io', io);
 
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.url}`);
-  next();
-});
-
-
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/', viewsRouter);
